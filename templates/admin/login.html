@@ -1,0 +1,15 @@
+{% extends 'admin/base.html' %}
+{% block admin_content %}
+<section class="login-panel">
+  <p class="eyebrow">PRIVATE AREA / SIGN IN</p><h1>Welcome back<span class="hero-period">.</span></h1><p class="admin-intro">Personal Hubのコンテンツを管理します。</p>
+  {% if configured %}
+  <form class="admin-form login-form" method="post" action="{{ url_for('admin_login', next=request.args.get('next', '')) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Username<input name="username" autocomplete="username" required maxlength="100" autofocus></label>
+    <label>Password<input type="password" name="password" autocomplete="current-password" required></label>
+    <button class="button-primary" type="submit">Sign in <span aria-hidden="true">→</span></button>
+  </form>
+  {% else %}<div class="setup-message"><strong>初回設定が必要です。</strong><p>起動前に <code>PERSONAL_HUB_ADMIN_PASSWORD</code> を設定してください。手順はREADMEを参照してください。</p></div>{% endif %}
+  <a class="back-link" href="{{ url_for('home') }}">← 公開ページへ</a>
+</section>
+{% endblock %}

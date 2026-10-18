@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow"><title>{{ page_title }} · Hub Admin</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+</head>
+<body class="admin-body">
+  <a class="skip-link" href="#admin-main">本文へ移動</a>
+  <header class="admin-header"><a class="wordmark" href="{{ url_for('admin_dashboard') }}"><span class="wordmark-mark">PH</span><span>HUB ADMIN</span></a><div class="admin-header-right"><span>{{ g.admin.username if g.admin is defined else 'Admin access' }}</span>{% if g.admin is defined %}<form method="post" action="{{ url_for('admin_logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="logout-button" type="submit">Log out ↗</button></form>{% endif %}</div></header>
+  <div class="admin-shell">
+    {% if g.admin is defined %}<aside class="admin-sidebar"><p class="admin-nav-label">CONTENT</p><nav aria-label="管理メニュー"><a href="{{ url_for('admin_dashboard') }}" class="{% if request.endpoint == 'admin_dashboard' %}active{% endif %}">Overview</a><a href="{{ url_for('admin_profile') }}">Profile</a><a href="{{ url_for('admin_social_links') }}">SNS Links</a><a href="{{ url_for('admin_section', section='now') }}">Now</a><a href="{{ url_for('admin_section', section='projects') }}">Projects</a><a href="{{ url_for('admin_section', section='activities') }}">Activity</a><a href="{{ url_for('admin_section', section='thoughts') }}">Thinking</a><a href="{{ url_for('admin_section', section='timeline') }}">Timeline</a><a href="{{ url_for('admin_security') }}">Account security</a></nav><a class="sidebar-public" href="{{ url_for('home') }}" target="_blank" rel="noopener noreferrer">View public site ↗</a></aside>{% endif %}
+    <main class="admin-main" id="admin-main">
+      {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack" role="status">{% for category, message in messages %}<p class="flash flash-{{ category }}">{{ message }}</p>{% endfor %}</div>{% endif %}{% endwith %}
+      {% block admin_content %}{% endblock %}
+    </main>
+  </div>
+  <script src="{{ url_for('static', filename='admin.js') }}" defer></script>
+</body>
+</html>

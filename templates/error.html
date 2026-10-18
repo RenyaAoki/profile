@@ -1,0 +1,4 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="error-page content-width"><p class="eyebrow">ERROR / {{ code }}</p><h1>{{ message }}</h1><a class="back-link" href="{{ url_for('home') }}">← トップへ戻る</a></section>
+{% endblock %}

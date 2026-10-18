@@ -1,0 +1,12 @@
+{% extends 'admin/base.html' %}
+{% block admin_content %}
+<header class="admin-page-heading"><div><p class="eyebrow">IDENTITY / INTRODUCTION</p><h1>Profile<span class="hero-period">.</span></h1><p class="admin-intro">公開プロフィールを編集します。住所・電話番号などの個人情報は入力しないでください。</p></div><a class="button-secondary" href="{{ url_for('home') }}#profile" target="_blank" rel="noopener noreferrer">Preview ↗</a></header>
+<form class="admin-form editor-form" method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="form-grid"><label>Name <span class="required">*</span><input name="name" value="{{ profile.name }}" required maxlength="120"></label><label>Headline<input name="headline" value="{{ profile.headline }}" maxlength="180" placeholder="Student · Developer · Entrepreneur"></label></div>
+  <label>Short introduction<textarea name="bio" rows="5" maxlength="2000">{{ profile.bio }}</textarea><small>公開ページの冒頭に表示されます。</small></label>
+  <div class="form-grid"><label>Interests<input name="interests" value="{{ profile.interests_text }}" placeholder="Technology, Business"><small>カンマ区切りで最大12件</small></label><label>Location<input name="location" value="{{ profile.location }}" maxlength="120" placeholder="Japan"><small>公開してよい大まかな地域のみ</small></label></div>
+  <label>Profile image URL<input type="url" name="image_url" value="{{ profile.image_url }}" placeholder="https://example.com/image.jpg"><small>画像は外部の公開URLを指定します。</small></label>
+  <div class="form-actions"><span>最終更新 {{ profile.updated_at[:10] }}</span><button class="button-primary" type="submit">Save profile <span aria-hidden="true">→</span></button></div>
+</form>
+{% endblock %}

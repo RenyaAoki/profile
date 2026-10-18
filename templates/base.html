@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page_title }} · Personal Hub</title>
+  <meta name="description" content="{{ page_description|default('プロフィール、活動、制作物をまとめたパーソナルハブ。') }}">
+  <link rel="canonical" href="{{ canonical|default(request.url) }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ page_title }} · Personal Hub">
+  <meta property="og:description" content="{{ page_description|default('プロフィール、活動、制作物をまとめたパーソナルハブ。') }}">
+  <meta property="og:url" content="{{ canonical|default(request.url) }}">
+  <meta property="og:site_name" content="Personal Hub">
+  {% if og_image|default('', true) %}<meta property="og:image" content="{{ og_image }}">{% endif %}
+  <meta name="theme-color" content="#f7f7f2">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ移動</a>
+  <header class="site-header">
+    <a class="wordmark" href="{{ url_for('home') }}" aria-label="Personal Hub トップ">
+      <span class="wordmark-mark">PH</span><span>PERSONAL HUB</span>
+    </a>
+    <nav class="top-nav" aria-label="ページナビゲーション">
+      <a href="{{ url_for('home') }}#profile">Profile</a>
+      {% if links is defined and links %}<a href="{{ url_for('home') }}#connect">Connect</a>{% endif %}
+      {% if now_items is defined and now_items %}<a href="{{ url_for('home') }}#now">Now</a>{% endif %}
+      {% if projects is defined and projects %}<a href="{{ url_for('home') }}#works">Works</a>{% endif %}
+      {% if activities is defined and activities %}<a href="{{ url_for('home') }}#activity">Activity</a>{% endif %}
+      {% if thoughts is defined and thoughts %}<a href="{{ url_for('home') }}#thinking">Thinking</a>{% endif %}
+      {% if timeline is defined and timeline %}<a href="{{ url_for('home') }}#timeline">Timeline</a>{% endif %}
+      <a class="nav-admin" href="{{ url_for('admin_root') }}">Admin <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+  <main id="main">{% block content %}{% endblock %}</main>
+  <footer class="site-footer">
+    <a class="footer-mark" href="{{ url_for('home') }}">PERSONAL HUB <span aria-hidden="true">↑</span></a>
+    <span>© {{ current_year }}{% if profile is defined and profile.name %} {{ profile.name }}{% endif %}</span>
+    {% if profile is defined and profile.updated_at %}<span>Updated {{ profile.updated_at[:10] }}</span>{% endif %}
+  </footer>
+</body>
+</html>

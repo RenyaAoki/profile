@@ -1,0 +1,11 @@
+{% extends 'admin/base.html' %}
+{% block admin_content %}
+<header class="admin-page-heading"><div><p class="eyebrow">ACCOUNT / ACCESS</p><h1>Account security<span class="hero-period">.</span></h1><p class="admin-intro">管理画面にサインインするパスワードを変更します。</p></div></header>
+<section class="editor-card security-card"><div class="admin-section-heading"><h2>Change password</h2><span>PRIVATE</span></div>
+<form class="admin-form compact-form" method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Current password<input type="password" name="current_password" autocomplete="current-password" required></label>
+  <div class="form-grid"><label>New password<input type="password" name="new_password" autocomplete="new-password" minlength="12" maxlength="1024" required><small>12文字以上</small></label><label>Confirm new password<input type="password" name="confirm_password" autocomplete="new-password" minlength="12" maxlength="1024" required></label></div>
+  <div class="form-actions"><button class="button-primary" type="submit">Update password <span aria-hidden="true">→</span></button></div>
+</form></section>
+{% endblock %}

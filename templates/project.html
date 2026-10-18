@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="project-page content-width">
+  <a class="back-link" href="{{ url_for('home') }}#works"><span aria-hidden="true">←</span> All projects</a>
+  <header class="project-header">
+    <p class="eyebrow">{{ project.category or 'PROJECT' }}{% if project.period %} <span class="eyebrow-divider">/</span> {{ project.period }}{% endif %} <span class="eyebrow-divider">/</span> {{ project.status }}</p>
+    <h1>{{ project.title }}<span class="hero-period">.</span></h1>
+    {% if project.summary %}<p class="project-lede">{{ project.summary }}</p>{% endif %}
+    {% if project.technologies_list %}<ul class="tech-list">{% for item in project.technologies_list %}<li>{{ item }}</li>{% endfor %}</ul>{% endif %}
+  </header>
+  {% if project.thumbnail_url %}<figure class="project-cover"><img src="{{ project.thumbnail_url }}" alt="{{ project.title }} project image"></figure>{% endif %}
+  {% set detail_labels = [('overview','Overview'),('background','Problem / Background'),('contribution','What I Did'),('result','Result'),('learning','What I Learned')] %}
+  <div class="project-details">{% for key, label in detail_labels %}{% if project.details.get(key) %}<section class="project-detail"><h2>{{ label }}</h2><p>{{ project.details[key] }}</p></section>{% endif %}{% endfor %}</div>
+  {% if project.details.get('links') %}<section class="project-links"><h2>Links</h2><ul>{% for item in project.details.links %}<li><a href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ item.url }} <span aria-hidden="true">↗</span></a></li>{% endfor %}</ul></section>{% endif %}
+  <p class="project-credit">An independent project by {{ owner_name }}.</p>
+</article>
+{% endblock %}
